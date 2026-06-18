@@ -65,10 +65,12 @@ function DashboardPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6 sm:py-10">
       {/* Welcome hero */}
-      <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-card p-6 shadow-soft sm:p-8">
-        <div className="grid items-center gap-6 md:grid-cols-[1.4fr_1fr]">
+      <section className="relative overflow-hidden rounded-3xl border border-border bg-mesh p-6 shadow-elegant sm:p-8">
+        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gradient-sunset opacity-40 blur-3xl" />
+        <div className="absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-gradient-ocean opacity-30 blur-3xl" />
+        <div className="relative grid items-center gap-6 md:grid-cols-[1.4fr_1fr]">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-xs font-semibold text-primary">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/70 px-3 py-1 text-xs font-semibold text-primary shadow-soft backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" /> Your AI career workspace
             </span>
             <h2 className="mt-4 font-display text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
