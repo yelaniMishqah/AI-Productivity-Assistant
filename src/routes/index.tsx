@@ -108,12 +108,15 @@ function DashboardPage() {
       {/* Stats */}
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
-            <div className="flex items-center justify-between">
+          <div key={s.label} className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-soft">
+            <div className={`absolute -right-6 -top-6 h-20 w-20 rounded-full ${s.tint} opacity-30 blur-2xl`} />
+            <div className="relative flex items-center justify-between">
               <span className="text-xs font-medium text-muted-foreground">{s.label}</span>
-              <s.icon className="h-4 w-4 text-primary" />
+              <span className={`grid h-7 w-7 place-items-center rounded-lg ${s.tint} text-white shadow-soft`}>
+                <s.icon className="h-3.5 w-3.5" />
+              </span>
             </div>
-            <p className="mt-2 font-display text-xl font-extrabold">{s.value}</p>
+            <p className="relative mt-2 font-display text-xl font-extrabold">{s.value}</p>
           </div>
         ))}
       </section>
@@ -127,15 +130,16 @@ function DashboardPage() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {tools.map(({ to, icon: Icon, title, desc, cta, accent }) => (
+          {tools.map(({ to, icon: Icon, title, desc, cta, gradient, glow }) => (
             <Link
               key={to}
               to={to}
               className="group relative overflow-hidden rounded-3xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-elegant"
             >
-              <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${accent} blur-2xl`} />
+              <div className={`absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br ${glow} blur-2xl`} />
+              <div className={`absolute -left-10 -bottom-12 h-32 w-32 rounded-full bg-gradient-to-tr ${glow} opacity-60 blur-2xl`} />
               <div className="relative grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3">
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-hero text-primary-foreground shadow-soft">
+                <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${gradient} text-white shadow-elegant ring-1 ring-white/30`}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
