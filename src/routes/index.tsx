@@ -82,7 +82,7 @@ function DashboardPage() {
             <div className="mt-5 flex flex-wrap gap-2">
               <Link
                 to="/resume"
-                className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:shadow-elegant"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-hero animate-gradient px-4 py-2.5 text-sm font-semibold text-white shadow-elegant transition-transform hover:scale-[1.02]"
               >
                 Analyze my resume <ArrowRight className="h-4 w-4" />
               </Link>
