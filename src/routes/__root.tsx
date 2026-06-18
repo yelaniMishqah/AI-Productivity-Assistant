@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "../components/layout/Header";
+import { Footer } from "../components/layout/Footer";
 
 function NotFoundComponent() {
   return (
@@ -77,20 +79,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "CareerBoost AI — AI Career Coach, Resume & Interview Tools" },
+      { name: "description", content: "AI-powered career coaching for students, graduates, and job seekers. Analyze your resume, prep for interviews, plan your career, and chat with an AI assistant." },
+      { name: "author", content: "CareerBoost AI" },
+      { property: "og:title", content: "CareerBoost AI — Your AI Career Coach" },
+      { property: "og:description", content: "Free AI tools to land your next role: resume analyzer, interview coach, career planner, and AI assistant." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" },
     ],
   }),
   shellComponent: RootShell,
@@ -118,8 +119,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </QueryClientProvider>
   );
 }
