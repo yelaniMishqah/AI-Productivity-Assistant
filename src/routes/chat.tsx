@@ -60,7 +60,7 @@ function ChatPage() {
   const [input, setInput] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const { messages, sendMessage, status, setMessages, stop } = useChat({
+  const { messages, sendMessage, status, setMessages } = useChat({
     id: "careerboost-main",
     messages: initial,
     transport,
@@ -182,7 +182,7 @@ function ChatPage() {
           />
           <PromptInputFooter className="justify-between">
             <span className="px-1 text-[11px] text-muted-foreground">AI guidance only — please verify important decisions.</span>
-            <PromptInputSubmit status={status} disabled={!input.trim() && !isBusy} onClick={isBusy ? () => stop() : undefined} />
+            <PromptInputSubmit status={status} disabled={!input.trim() || isBusy} />
           </PromptInputFooter>
         </PromptInput>
         <AIDisclaimer className="mt-3 sm:hidden" />
