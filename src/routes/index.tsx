@@ -22,7 +22,8 @@ const tools = [
     title: "Resume Analyzer",
     desc: "Score your resume, fix weaknesses, optimize for ATS.",
     cta: "Analyze a resume",
-    accent: "from-indigo-500/15 to-blue-500/10",
+    gradient: "bg-gradient-sunset",
+    glow: "from-fuchsia-500/40 via-pink-500/30 to-orange-400/30",
   },
   {
     to: "/interview",
@@ -30,7 +31,8 @@ const tools = [
     title: "Interview Coach",
     desc: "Tailored questions, sample answers, and prep tips.",
     cta: "Start a practice session",
-    accent: "from-teal-500/15 to-cyan-500/10",
+    gradient: "bg-gradient-ocean",
+    glow: "from-cyan-400/40 via-sky-500/30 to-teal-400/30",
   },
   {
     to: "/planner",
@@ -38,7 +40,8 @@ const tools = [
     title: "Career Planner",
     desc: "Personalized roadmap with milestones and skills.",
     cta: "Build a roadmap",
-    accent: "from-violet-500/15 to-fuchsia-500/10",
+    gradient: "bg-gradient-mint",
+    glow: "from-emerald-400/40 via-lime-400/30 to-teal-400/30",
   },
   {
     to: "/chat",
@@ -46,15 +49,16 @@ const tools = [
     title: "AI Assistant",
     desc: "Chat 24/7 about jobs, growth, and learning.",
     cta: "Open assistant",
-    accent: "from-amber-500/15 to-orange-500/10",
+    gradient: "bg-gradient-amber",
+    glow: "from-amber-400/40 via-orange-400/30 to-rose-400/30",
   },
 ] as const;
 
 const stats = [
-  { label: "AI tools", value: "4", icon: Sparkles },
-  { label: "Avg. minutes per session", value: "~3", icon: Rocket },
-  { label: "Editable outputs", value: "100%", icon: Target },
-  { label: "Free to use", value: "Yes", icon: GraduationCap },
+  { label: "AI tools", value: "4", icon: Sparkles, tint: "bg-gradient-sunset" },
+  { label: "Avg. minutes per session", value: "~3", icon: Rocket, tint: "bg-gradient-ocean" },
+  { label: "Editable outputs", value: "100%", icon: Target, tint: "bg-gradient-mint" },
+  { label: "Free to use", value: "Yes", icon: GraduationCap, tint: "bg-gradient-amber" },
 ] as const;
 
 function DashboardPage() {
