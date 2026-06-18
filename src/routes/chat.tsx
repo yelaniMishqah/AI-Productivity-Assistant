@@ -102,7 +102,7 @@ function ChatPage() {
   };
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-4rem-1px)] max-w-4xl flex-col px-4 py-6 sm:px-6">
+    <div className="mx-auto flex h-[calc(100vh-3.5rem-1px)] max-w-4xl flex-col px-4 py-4 sm:px-6 sm:py-6">
       <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 pb-4">
         <div className="flex min-w-0 items-center gap-3">
           <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-hero text-primary-foreground shadow-soft">

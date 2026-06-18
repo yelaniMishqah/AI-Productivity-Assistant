@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { MessageSquare, Loader2, Sparkles, Lightbulb } from "lucide-react";
+import { MessageSquare, Loader2, Sparkles, Lightbulb, Trash2 } from "lucide-react";
 import { generateInterviewPlan } from "@/lib/career.functions";
 import { AIDisclaimer } from "@/components/AIDisclaimer";
+import { EditableList, CopyButton } from "@/components/EditableList";
+import { PromptStructure } from "@/components/PromptStructure";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/interview")({
@@ -19,6 +21,7 @@ export const Route = createFileRoute("/interview")({
 });
 
 type Result = Awaited<ReturnType<typeof generateInterviewPlan>>;
+type QA = Result["questions"][number];
 
 function InterviewPage() {
   const generate = useServerFn(generateInterviewPlan);
@@ -43,17 +46,35 @@ function InterviewPage() {
     }
   };
 
+  const patchQuestion = (i: number, key: keyof QA, value: string) => {
+    if (!result) return;
+    const next = [...result.questions];
+    next[i] = { ...next[i], [key]: value };
+    setResult({ ...result, questions: next });
+  };
+  const removeQuestion = (i: number) => {
+    if (!result) return;
+    setResult({ ...result, questions: result.questions.filter((_, idx) => idx !== i) });
+  };
+
+  const buildReport = (r: Result) =>
+    `INTERVIEW PREP — ${role}${industry ? ` (${industry})` : ""} · ${level}\n\n` +
+    r.questions
+      .map((q, i) => `Q${i + 1} [${q.category}]: ${q.question}\n\nSample answer:\n${q.sampleAnswer}\n\nTip: ${q.tip}\n`)
+      .join("\n---\n\n") +
+    `\nPreparation tips:\n${r.preparationTips.map((t) => `- ${t}`).join("\n")}`;
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
       <div className="max-w-3xl">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-xs font-semibold text-primary">
           <MessageSquare className="h-3.5 w-3.5" /> Interview Coach
         </span>
-        <h1 className="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+        <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
           Practice with role-specific interview questions
-        </h1>
+        </h2>
         <p className="mt-3 text-muted-foreground">
-          Tell us the role and industry — we'll generate a mix of behavioral, technical, and situational questions with sample answers.
+          Tell us the role and industry — we'll generate a mix of behavioral, technical, and situational questions. Every answer and tip is editable.
         </p>
       </div>
 
@@ -90,17 +111,26 @@ function InterviewPage() {
             </select>
           </div>
         </div>
-        <div className="mt-5 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_1.4fr] lg:items-start">
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:shadow-elegant disabled:opacity-60"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:shadow-elegant disabled:opacity-60"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
             {loading ? "Generating..." : "Generate interview prep"}
           </button>
-          <AIDisclaimer className="w-full sm:w-auto" />
+          <PromptStructure
+            items={[
+              { label: "Role + industry", desc: "Shapes the depth and domain of questions." },
+              { label: "Level", desc: "Adjusts complexity from entry to senior expectations." },
+              { label: "Format", desc: "Mix of behavioral, technical, and situational." },
+              { label: "Output", desc: "Question, sample STAR answer, and tip for each item." },
+            ]}
+          />
         </div>
+        <AIDisclaimer className="mt-4" />
       </form>
 
       {loading && (
@@ -115,48 +145,75 @@ function InterviewPage() {
       {result && (
         <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <h2 className="font-display text-xl font-bold">Practice questions</h2>
-            <div className="mt-4 space-y-4">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="font-display text-xl font-bold">Practice questions</h3>
+              <CopyButton getText={() => buildReport(result)} label="Copy report" />
+            </div>
+            <div className="space-y-4">
               {result.questions.map((q, i) => (
-                <details key={i} className="group rounded-3xl border border-border bg-card p-5 shadow-soft open:shadow-elegant">
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
-                    <div>
-                      <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-                        Q{i + 1} · {q.category}
-                      </span>
-                      <p className="mt-1 font-semibold">{q.question}</p>
+                <div key={i} className="rounded-3xl border border-border bg-card p-5 shadow-soft">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-primary">Q{i + 1}</span>
+                        <input
+                          value={q.category}
+                          onChange={(e) => patchQuestion(i, "category", e.target.value)}
+                          className="rounded-md bg-transparent px-1 py-0.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground outline-none focus:bg-muted focus:ring-1 focus:ring-ring"
+                        />
+                      </div>
+                      <textarea
+                        value={q.question}
+                        onChange={(e) => patchQuestion(i, "question", e.target.value)}
+                        rows={1}
+                        className="field-sizing-content mt-1 w-full resize-none rounded-md bg-transparent px-1 py-1 font-semibold outline-none focus:bg-muted focus:ring-1 focus:ring-ring"
+                      />
                     </div>
-                    <span className="shrink-0 rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-transform group-open:rotate-180">
-                      ▾
-                    </span>
-                  </summary>
+                    <button
+                      type="button"
+                      onClick={() => removeQuestion(i)}
+                      aria-label="Remove question"
+                      className="grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
                   <div className="mt-4 space-y-3 border-t border-border pt-4">
                     <div>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Sample answer</h4>
-                      <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-foreground/90">{q.sampleAnswer}</p>
+                      <textarea
+                        value={q.sampleAnswer}
+                        onChange={(e) => patchQuestion(i, "sampleAnswer", e.target.value)}
+                        rows={4}
+                        className="field-sizing-content mt-1 w-full resize-none rounded-lg border border-input bg-background px-3 py-2 text-sm leading-relaxed outline-none focus:ring-2 focus:ring-ring"
+                      />
                     </div>
                     <div className="rounded-xl bg-accent/60 p-3 text-sm">
                       <span className="inline-flex items-center gap-1.5 font-semibold text-accent-foreground">
                         <Lightbulb className="h-3.5 w-3.5" /> Tip
                       </span>
-                      <p className="mt-1 text-foreground/90">{q.tip}</p>
+                      <textarea
+                        value={q.tip}
+                        onChange={(e) => patchQuestion(i, "tip", e.target.value)}
+                        rows={2}
+                        className="field-sizing-content mt-1 w-full resize-none rounded-md bg-transparent text-foreground/90 outline-none focus:bg-background focus:px-2 focus:py-1 focus:ring-1 focus:ring-ring"
+                      />
                     </div>
                   </div>
-                </details>
+                </div>
               ))}
             </div>
           </div>
 
-          <aside className="rounded-3xl border border-border bg-gradient-card p-6 shadow-soft lg:sticky lg:top-24 lg:self-start">
-            <h2 className="font-display text-lg font-bold">Preparation tips</h2>
-            <ul className="mt-4 space-y-3">
-              {result.preparationTips.map((t, i) => (
-                <li key={i} className="flex gap-2.5 text-sm">
-                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  <span className="text-foreground/90">{t}</span>
-                </li>
-              ))}
-            </ul>
+          <aside className="rounded-3xl border border-border bg-gradient-card p-6 shadow-soft lg:sticky lg:top-20 lg:self-start">
+            <h3 className="font-display text-lg font-bold">Preparation tips</h3>
+            <div className="mt-4">
+              <EditableList
+                items={result.preparationTips}
+                onChange={(v) => setResult({ ...result, preparationTips: v })}
+                placeholder="Add a prep tip..."
+              />
+            </div>
           </aside>
         </div>
       )}
