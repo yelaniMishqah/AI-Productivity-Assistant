@@ -91,9 +91,8 @@ function ChatPage() {
     await sendMessage({ text: t });
   };
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    send(input);
+  const onSubmit = (message: { text: string }) => {
+    send(message.text || input);
   };
 
   const reset = () => {
