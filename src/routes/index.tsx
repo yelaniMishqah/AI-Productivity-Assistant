@@ -74,7 +74,7 @@ function DashboardPage() {
               <Sparkles className="h-3.5 w-3.5" /> Your AI career workspace
             </span>
             <h2 className="mt-4 font-display text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
-              Welcome back — let's <span className="text-gradient">boost your career</span>
+              Welcome back — let's <span className="text-gradient animate-gradient">boost your career</span>
             </h2>
             <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
               Pick a tool to get started. Every AI suggestion is editable — refine, save, and copy it before sharing.
