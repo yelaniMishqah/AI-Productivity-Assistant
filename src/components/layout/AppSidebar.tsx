@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/sidebar";
 
 const navItems = [
-  { title: "Dashboard", url: "/", icon: Home },
-  { title: "Resume Analyzer", url: "/resume", icon: FileText },
-  { title: "Interview Coach", url: "/interview", icon: MessageSquare },
-  { title: "Career Planner", url: "/planner", icon: Compass },
-  { title: "AI Assistant", url: "/chat", icon: Bot },
+  { title: "Dashboard", url: "/", icon: Home, tint: "bg-gradient-hero" },
+  { title: "Resume Analyzer", url: "/resume", icon: FileText, tint: "bg-gradient-sunset" },
+  { title: "Interview Coach", url: "/interview", icon: MessageSquare, tint: "bg-gradient-ocean" },
+  { title: "Career Planner", url: "/planner", icon: Compass, tint: "bg-gradient-mint" },
+  { title: "AI Assistant", url: "/chat", icon: Bot, tint: "bg-gradient-amber" },
 ] as const;
 
 export function AppSidebar() {
