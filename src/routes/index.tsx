@@ -22,7 +22,8 @@ const tools = [
     title: "Resume Analyzer",
     desc: "Score your resume, fix weaknesses, optimize for ATS.",
     cta: "Analyze a resume",
-    accent: "from-indigo-500/15 to-blue-500/10",
+    gradient: "bg-gradient-sunset",
+    glow: "from-fuchsia-500/40 via-pink-500/30 to-orange-400/30",
   },
   {
     to: "/interview",
@@ -30,7 +31,8 @@ const tools = [
     title: "Interview Coach",
     desc: "Tailored questions, sample answers, and prep tips.",
     cta: "Start a practice session",
-    accent: "from-teal-500/15 to-cyan-500/10",
+    gradient: "bg-gradient-ocean",
+    glow: "from-cyan-400/40 via-sky-500/30 to-teal-400/30",
   },
   {
     to: "/planner",
@@ -38,7 +40,8 @@ const tools = [
     title: "Career Planner",
     desc: "Personalized roadmap with milestones and skills.",
     cta: "Build a roadmap",
-    accent: "from-violet-500/15 to-fuchsia-500/10",
+    gradient: "bg-gradient-mint",
+    glow: "from-emerald-400/40 via-lime-400/30 to-teal-400/30",
   },
   {
     to: "/chat",
@@ -46,29 +49,32 @@ const tools = [
     title: "AI Assistant",
     desc: "Chat 24/7 about jobs, growth, and learning.",
     cta: "Open assistant",
-    accent: "from-amber-500/15 to-orange-500/10",
+    gradient: "bg-gradient-amber",
+    glow: "from-amber-400/40 via-orange-400/30 to-rose-400/30",
   },
 ] as const;
 
 const stats = [
-  { label: "AI tools", value: "4", icon: Sparkles },
-  { label: "Avg. minutes per session", value: "~3", icon: Rocket },
-  { label: "Editable outputs", value: "100%", icon: Target },
-  { label: "Free to use", value: "Yes", icon: GraduationCap },
+  { label: "AI tools", value: "4", icon: Sparkles, tint: "bg-gradient-sunset" },
+  { label: "Avg. minutes per session", value: "~3", icon: Rocket, tint: "bg-gradient-ocean" },
+  { label: "Editable outputs", value: "100%", icon: Target, tint: "bg-gradient-mint" },
+  { label: "Free to use", value: "Yes", icon: GraduationCap, tint: "bg-gradient-amber" },
 ] as const;
 
 function DashboardPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6 sm:py-10">
       {/* Welcome hero */}
-      <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-card p-6 shadow-soft sm:p-8">
-        <div className="grid items-center gap-6 md:grid-cols-[1.4fr_1fr]">
+      <section className="relative overflow-hidden rounded-3xl border border-border bg-mesh p-6 shadow-elegant sm:p-8">
+        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-gradient-sunset opacity-40 blur-3xl" />
+        <div className="absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-gradient-ocean opacity-30 blur-3xl" />
+        <div className="relative grid items-center gap-6 md:grid-cols-[1.4fr_1fr]">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-xs font-semibold text-primary">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/70 px-3 py-1 text-xs font-semibold text-primary shadow-soft backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" /> Your AI career workspace
             </span>
             <h2 className="mt-4 font-display text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
-              Welcome back — let's <span className="text-gradient">boost your career</span>
+              Welcome back — let's <span className="text-gradient animate-gradient">boost your career</span>
             </h2>
             <p className="mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
               Pick a tool to get started. Every AI suggestion is editable — refine, save, and copy it before sharing.
@@ -76,7 +82,7 @@ function DashboardPage() {
             <div className="mt-5 flex flex-wrap gap-2">
               <Link
                 to="/resume"
-                className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-all hover:shadow-elegant"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-hero animate-gradient px-4 py-2.5 text-sm font-semibold text-white shadow-elegant transition-transform hover:scale-[1.02]"
               >
                 Analyze my resume <ArrowRight className="h-4 w-4" />
               </Link>
@@ -104,12 +110,15 @@ function DashboardPage() {
       {/* Stats */}
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
-            <div className="flex items-center justify-between">
+          <div key={s.label} className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-soft">
+            <div className={`absolute -right-6 -top-6 h-20 w-20 rounded-full ${s.tint} opacity-30 blur-2xl`} />
+            <div className="relative flex items-center justify-between">
               <span className="text-xs font-medium text-muted-foreground">{s.label}</span>
-              <s.icon className="h-4 w-4 text-primary" />
+              <span className={`grid h-7 w-7 place-items-center rounded-lg ${s.tint} text-white shadow-soft`}>
+                <s.icon className="h-3.5 w-3.5" />
+              </span>
             </div>
-            <p className="mt-2 font-display text-xl font-extrabold">{s.value}</p>
+            <p className="relative mt-2 font-display text-xl font-extrabold">{s.value}</p>
           </div>
         ))}
       </section>
@@ -123,15 +132,16 @@ function DashboardPage() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {tools.map(({ to, icon: Icon, title, desc, cta, accent }) => (
+          {tools.map(({ to, icon: Icon, title, desc, cta, gradient, glow }) => (
             <Link
               key={to}
               to={to}
               className="group relative overflow-hidden rounded-3xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-elegant"
             >
-              <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${accent} blur-2xl`} />
+              <div className={`absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-to-br ${glow} blur-2xl`} />
+              <div className={`absolute -left-10 -bottom-12 h-32 w-32 rounded-full bg-gradient-to-tr ${glow} opacity-60 blur-2xl`} />
               <div className="relative grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3">
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-hero text-primary-foreground shadow-soft">
+                <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${gradient} text-white shadow-elegant ring-1 ring-white/30`}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
@@ -152,16 +162,17 @@ function DashboardPage() {
         <h3 className="font-display text-lg font-bold">How it works</h3>
         <div className="mt-5 grid gap-5 md:grid-cols-3">
           {[
-            { n: "1", t: "Share your context", d: "Paste your resume, target role, or current situation." },
-            { n: "2", t: "Get AI insights", d: "Receive a tailored analysis, plan, or interview prep in seconds." },
-            { n: "3", t: "Edit & take action", d: "Tweak every AI suggestion to match your voice and apply." },
+            { n: "1", t: "Share your context", d: "Paste your resume, target role, or current situation.", g: "bg-gradient-sunset" },
+            { n: "2", t: "Get AI insights", d: "Receive a tailored analysis, plan, or interview prep in seconds.", g: "bg-gradient-ocean" },
+            { n: "3", t: "Edit & take action", d: "Tweak every AI suggestion to match your voice and apply.", g: "bg-gradient-mint" },
           ].map((s) => (
-            <div key={s.n} className="rounded-2xl border border-border bg-muted/40 p-4">
-              <span className="inline-grid h-8 w-8 place-items-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
+            <div key={s.n} className="relative overflow-hidden rounded-2xl border border-border bg-card p-4">
+              <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full ${s.g} opacity-25 blur-2xl`} />
+              <span className={`relative inline-grid h-9 w-9 place-items-center rounded-xl ${s.g} text-sm font-bold text-white shadow-soft`}>
                 {s.n}
               </span>
-              <h4 className="mt-3 font-display font-bold">{s.t}</h4>
-              <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
+              <h4 className="relative mt-3 font-display font-bold">{s.t}</h4>
+              <p className="relative mt-1 text-sm text-muted-foreground">{s.d}</p>
             </div>
           ))}
         </div>

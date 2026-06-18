@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/sidebar";
 
 const navItems = [
-  { title: "Dashboard", url: "/", icon: Home },
-  { title: "Resume Analyzer", url: "/resume", icon: FileText },
-  { title: "Interview Coach", url: "/interview", icon: MessageSquare },
-  { title: "Career Planner", url: "/planner", icon: Compass },
-  { title: "AI Assistant", url: "/chat", icon: Bot },
+  { title: "Dashboard", url: "/", icon: Home, tint: "bg-gradient-hero" },
+  { title: "Resume Analyzer", url: "/resume", icon: FileText, tint: "bg-gradient-sunset" },
+  { title: "Interview Coach", url: "/interview", icon: MessageSquare, tint: "bg-gradient-ocean" },
+  { title: "Career Planner", url: "/planner", icon: Compass, tint: "bg-gradient-mint" },
+  { title: "AI Assistant", url: "/chat", icon: Bot, tint: "bg-gradient-amber" },
 ] as const;
 
 export function AppSidebar() {
@@ -57,7 +57,9 @@ export function AppSidebar() {
                     tooltip={item.title}
                   >
                     <Link to={item.url} className="flex items-center gap-2">
-                      <item.icon className="h-4 w-4" />
+                      <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-md ${item.tint} text-white shadow-sog`}>
+                        <item.icon className="h-3.5 w-3.5" />
+                      </span>
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
