@@ -162,16 +162,17 @@ function DashboardPage() {
         <h3 className="font-display text-lg font-bold">How it works</h3>
         <div className="mt-5 grid gap-5 md:grid-cols-3">
           {[
-            { n: "1", t: "Share your context", d: "Paste your resume, target role, or current situation." },
-            { n: "2", t: "Get AI insights", d: "Receive a tailored analysis, plan, or interview prep in seconds." },
-            { n: "3", t: "Edit & take action", d: "Tweak every AI suggestion to match your voice and apply." },
+            { n: "1", t: "Share your context", d: "Paste your resume, target role, or current situation.", g: "bg-gradient-sunset" },
+            { n: "2", t: "Get AI insights", d: "Receive a tailored analysis, plan, or interview prep in seconds.", g: "bg-gradient-ocean" },
+            { n: "3", t: "Edit & take action", d: "Tweak every AI suggestion to match your voice and apply.", g: "bg-gradient-mint" },
           ].map((s) => (
-            <div key={s.n} className="rounded-2xl border border-border bg-muted/40 p-4">
-              <span className="inline-grid h-8 w-8 place-items-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
+            <div key={s.n} className="relative overflow-hidden rounded-2xl border border-border bg-card p-4">
+              <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full ${s.g} opacity-25 blur-2xl`} />
+              <span className={`relative inline-grid h-9 w-9 place-items-center rounded-xl ${s.g} text-sm font-bold text-white shadow-soft`}>
                 {s.n}
               </span>
-              <h4 className="mt-3 font-display font-bold">{s.t}</h4>
-              <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
+              <h4 className="relative mt-3 font-display font-bold">{s.t}</h4>
+              <p className="relative mt-1 text-sm text-muted-foreground">{s.d}</p>
             </div>
           ))}
         </div>
