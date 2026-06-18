@@ -167,6 +167,7 @@
   }
   body {
     background: var(--gradient-subtle);
+    background-attachment: fixed;
     color: var(--color-foreground);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
