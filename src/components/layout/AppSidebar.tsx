@@ -57,7 +57,9 @@ export function AppSidebar() {
                     tooltip={item.title}
                   >
                     <Link to={item.url} className="flex items-center gap-2">
-                      <item.icon className="h-4 w-4" />
+                      <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-md ${item.tint} text-white shadow-sog`}>
+                        <item.icon className="h-3.5 w-3.5" />
+                      </span>
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
