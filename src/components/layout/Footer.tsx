@@ -43,7 +43,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} CareerBoost AI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CareerBoost AI. Built by Ahule Mishqah Yelani.</p>
           <p>Made with care for your career journey.</p>
         </div>
       </div>
