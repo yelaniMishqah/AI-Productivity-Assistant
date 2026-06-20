@@ -72,12 +72,17 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border">
         {!collapsed ? (
-          <div className="flex items-start gap-2 rounded-xl border border-warning/40 bg-warning/10 p-3 text-[11px] leading-relaxed text-muted-foreground">
-            <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-warning-foreground/80" />
-            <p>
-              <span className="font-semibold text-foreground">AI guidance only.</span> Review suggestions before acting on important decisions.
+          <>
+            <div className="flex items-start gap-2 rounded-xl border border-warning/40 bg-warning/10 p-3 text-[11px] leading-relaxed text-muted-foreground">
+              <ShieldAlert className="mt-0.5 h-3.5 w-3.5 shrink-0 text-warning-foreground/80" />
+              <p>
+                <span className="font-semibold text-foreground">AI guidance only.</span> Review suggestions before acting on important decisions.
+              </p>
+            </div>
+            <p className="px-1 pt-1 text-[10px] text-muted-foreground/60">
+              Built by Ahule Mishqah Yelani
             </p>
-          </div>
+          </>
         ) : (
           <div className="grid h-9 w-9 place-items-center rounded-lg border border-warning/40 bg-warning/10" title="AI guidance only">
             <ShieldAlert className="h-4 w-4 text-warning-foreground/80" />
