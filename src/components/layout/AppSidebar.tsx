@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, FileText, MessageSquare, Compass, Bot, Sparkles, ShieldAlert } from "lucide-react";
+import { Home, FileText, MessageSquare, Compass, Bot, Sparkles, ShieldAlert, FolderOpen } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,7 @@ const navItems = [
   { title: "Interview Coach", url: "/interview", icon: MessageSquare, tint: "bg-gradient-ocean" },
   { title: "Career Planner", url: "/planner", icon: Compass, tint: "bg-gradient-mint" },
   { title: "AI Assistant", url: "/chat", icon: Bot, tint: "bg-gradient-amber" },
+  { title: "My Files", url: "/files", icon: FolderOpen, tint: "bg-gradient-hero" },
 ] as const;
 
 export function AppSidebar() {
