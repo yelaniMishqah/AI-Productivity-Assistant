@@ -3,7 +3,8 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Bot, Sparkles, RefreshCw } from "lucide-react";
+import { Bot, Sparkles, RefreshCw, BookmarkPlus } from "lucide-react";
+import { saveFile } from "@/lib/files-store";
 import {
   Conversation,
   ConversationContent,
@@ -145,21 +146,36 @@ function ChatPage() {
             </ConversationEmptyState>
           ) : (
             <>
-              {messages.map((m) => (
-                <Message key={m.id} from={m.role === "user" ? "user" : "assistant"}>
-                  {m.role === "assistant" ? (
-                    <div className="prose prose-sm max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-foreground prose-a:text-primary prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:text-xs prose-code:before:content-none prose-code:after:content-none">
-                      <ReactMarkdown>
-                        {m.parts.map((p) => (p.type === "text" ? p.text : "")).join("")}
-                      </ReactMarkdown>
-                    </div>
-                  ) : (
-                    <MessageContent>
-                      {m.parts.map((p, i) => (p.type === "text" ? <span key={i}>{p.text}</span> : null))}
-                    </MessageContent>
-                  )}
-                </Message>
-              ))}
+              {messages.map((m) => {
+                const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
+                return (
+                  <Message key={m.id} from={m.role === "user" ? "user" : "assistant"}>
+                    {m.role === "assistant" ? (
+                      <div className="group/msg relative">
+                        <div className="prose prose-sm max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-p:leading-relaxed prose-strong:text-foreground prose-a:text-primary prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:text-xs prose-code:before:content-none prose-code:after:content-none">
+                          <ReactMarkdown>{text}</ReactMarkdown>
+                        </div>
+                        {text.trim().length > 0 && (
+                          <button
+                            onClick={() => {
+                              const title = text.trim().split("\n")[0].replace(/^#+\s*/, "").slice(0, 60) || "Saved answer";
+                              saveFile({ title, source: "chat", content: text });
+                              toast.success("Saved to Files");
+                            }}
+                            className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                          >
+                            <BookmarkPlus className="h-3 w-3" /> Save to Files
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <MessageContent>
+                        {m.parts.map((p, i) => (p.type === "text" ? <span key={i}>{p.text}</span> : null))}
+                      </MessageContent>
+                    )}
+                  </Message>
+                );
+              })}
               {status === "submitted" && (
                 <Message from="assistant">
                   <Shimmer>Thinking...</Shimmer>

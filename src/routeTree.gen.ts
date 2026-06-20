@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as PlannerRouteImport } from './routes/planner'
 import { Route as InterviewRouteImport } from './routes/interview'
+import { Route as FilesRouteImport } from './routes/files'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -29,6 +30,11 @@ const PlannerRoute = PlannerRouteImport.update({
 const InterviewRoute = InterviewRouteImport.update({
   id: '/interview',
   path: '/interview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FilesRoute = FilesRouteImport.update({
+  id: '/files',
+  path: '/files',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatRoute = ChatRouteImport.update({
@@ -50,6 +56,7 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
+  '/files': typeof FilesRoute
   '/interview': typeof InterviewRoute
   '/planner': typeof PlannerRoute
   '/resume': typeof ResumeRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
+  '/files': typeof FilesRoute
   '/interview': typeof InterviewRoute
   '/planner': typeof PlannerRoute
   '/resume': typeof ResumeRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
+  '/files': typeof FilesRoute
   '/interview': typeof InterviewRoute
   '/planner': typeof PlannerRoute
   '/resume': typeof ResumeRoute
@@ -74,13 +83,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/interview' | '/planner' | '/resume' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/files'
+    | '/interview'
+    | '/planner'
+    | '/resume'
+    | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/interview' | '/planner' | '/resume' | '/api/chat'
+  to:
+    | '/'
+    | '/chat'
+    | '/files'
+    | '/interview'
+    | '/planner'
+    | '/resume'
+    | '/api/chat'
   id:
     | '__root__'
     | '/'
     | '/chat'
+    | '/files'
     | '/interview'
     | '/planner'
     | '/resume'
@@ -90,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChatRoute: typeof ChatRoute
+  FilesRoute: typeof FilesRoute
   InterviewRoute: typeof InterviewRoute
   PlannerRoute: typeof PlannerRoute
   ResumeRoute: typeof ResumeRoute
@@ -119,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InterviewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/files': {
+      id: '/files'
+      path: '/files'
+      fullPath: '/files'
+      preLoaderRoute: typeof FilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat': {
       id: '/chat'
       path: '/chat'
@@ -146,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChatRoute: ChatRoute,
+  FilesRoute: FilesRoute,
   InterviewRoute: InterviewRoute,
   PlannerRoute: PlannerRoute,
   ResumeRoute: ResumeRoute,
