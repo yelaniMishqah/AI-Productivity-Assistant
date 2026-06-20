@@ -80,7 +80,7 @@ export function AppSidebar() {
               </p>
             </div>
             <p className="px-1 pt-1 text-[10px] text-muted-foreground/60">
-              Built by Ahule Mishqah Yelani
+              Built by <a href="https://athulemishqahyelani-pulse-pro.base44.app" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Athule Mishqah Yelani</a>
             </p>
           </>
         ) : (
