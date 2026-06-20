@@ -84,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "CareerBoost AI — AI Career Coach, Resume & Interview Tools" },
       { name: "description", content: "AI-powered career coaching for students, graduates, and job seekers. Analyze your resume, prep for interviews, plan your career, and chat with an AI assistant." },
-      { name: "author", content: "Ahule Mishqah Yelani — CareerBoost AI" },
+      { name: "author", content: "Athule Mishqah Yelani — CareerBoost AI" },
       { property: "og:title", content: "CareerBoost AI — AI Career Coach, Resume & Interview Tools" },
       { property: "og:description", content: "AI-powered career coaching for students, graduates, and job seekers. Analyze your resume, prep for interviews, plan your career, and chat with an AI assistant." },
       { property: "og:type", content: "website" },
